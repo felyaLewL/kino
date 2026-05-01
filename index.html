@@ -5,36 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
-        /* Плеер на весь экран */
+        /* Плеер растягиваем на весь экран */
         #yohoho { width: 100%; height: 100%; } 
     </style>
 </head>
 <body>
-    <!-- Надпись, которая пропадет, когда плеер начнет грузиться -->
-    <h2 id="status" style="color:white; text-align:center; margin-top: 50px;">Загрузка плеера...</h2>
-    
-    <!-- Контейнер для плеера -->
-    <div id="yohoho"></div>
-    
     <script>
-        // Достаем ID фильма из ссылки бота
         const urlParams = new URLSearchParams(window.location.search);
         const kpId = urlParams.get('kp_id');
         
-        if(kpId) {
-            // Прячем стартовую надпись
-            document.getElementById('status').style.display = 'none';
-            
-            // Передаем ID Кинопоиска в плеер
-            document.getElementById('yohoho').dataset.kinopoisk = kpId;
-            
-            // Запускаем сам скрипт бессмертного Yohoho
-            const script = document.createElement('script');
-            script.src = 'https://yohoho.cc/yo.js';
-            document.body.appendChild(script);
+        if (kpId) {
+            // Команда document.write вписывает HTML жестко и ДО окончания загрузки страницы
+            document.write('<div id="yohoho" data-kinopoisk="' + kpId + '"></div>');
+            document.write('<script src="//yohoho.cc/yo.js"><\/script>');
         } else {
-            document.getElementById('status').innerHTML = "Ошибка: ID фильма не передан";
-            document.getElementById('status').style.color = "red";
+            document.write('<h3 style="color:red; text-align:center; margin-top:50px;">Ошибка: ID фильма не передан</h3>');
         }
     </script>
 </body>
